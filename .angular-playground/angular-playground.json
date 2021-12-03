@@ -1,0 +1,6 @@
+{
+  "sourceRoots": ["./projects/ngx-hunter-lib/src"],
+  "angularCli": {
+    "appName": "playground"
+  }
+}

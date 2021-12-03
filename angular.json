@@ -1,7 +1,103 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "ngx-hunter-lib": {
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "projectType": "library",
+      "root": "projects/ngx-hunter-lib",
+      "sourceRoot": "projects/ngx-hunter-lib/src",
+      "prefix": "hnt",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-hunter-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-hunter-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-hunter-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-hunter-lib/src/test.ts",
+            "tsConfig": "projects/ngx-hunter-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-hunter-lib/karma.conf.js"
+          }
+        }
+      }
+    },
+    "playground": {
+      "projectType": "application",
+      "root": "projects/ngx-hunter-lib",
+      "sourceRoot": "projects/ngx-hunter-lib/src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/playground",
+            "index": "projects/ngx-hunter-lib/src/index.html",
+            "main": ".angular-playground/main.playground.ts",
+            "polyfills": "projects/ngx-hunter-lib/src/polyfills.ts",
+            "tsConfig": ".angular-playground/tsconfig.playground.json",
+            "aot": false,
+            "assets": [
+              "projects/ngx-hunter-lib/src/favicon.ico",
+              "projects/ngx-hunter-lib/src/assets"
+            ],
+            "styles": ["projects/ngx-hunter-lib/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/ngx-hunter-lib/src/environments/environment.ts",
+                  "with": "projects/ngx-hunter-lib/src/environments/environment.prod.ts"
+                }
+              ],
+              "buildOptimizer": false,
+              "extractLicenses": false,
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "playground:build",
+            "port": 4201
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ngx-hunter-lib"
 }

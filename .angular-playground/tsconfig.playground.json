@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "types": []
+  },
+  "files": [
+    "./main.playground.ts",
+    "../projects/ngx-hunter-lib/src/polyfills.ts"
+  ],
+  "include": ["../src/**/*.d.ts", "../src/**/*.sandbox.ts"]
+}
